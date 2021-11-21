@@ -25,19 +25,16 @@ namespace Grafika_zad7
 
         List<Point> points;
         List<Rectangle> rectangles;
-        Collection<List<Rectangle>> shapes;
+        Collection<CustomShape> shapes;
 
-        List<Rectangle> currentShape;
-        List<Rectangle> previousShape;
+        CustomShape currentShape;
 
         public MainWindow()
         {
             InitializeComponent();
             points = new List<Point>();
             rectangles = new List<Rectangle>();
-            shapes = new Collection<List<Rectangle>>();
-            currentShape = new List<Rectangle>();
-            previousShape = new List<Rectangle>();
+            shapes = new Collection<CustomShape>();
             IS_DRAWING_ENABLE = true;
         }
 
@@ -52,10 +49,10 @@ namespace Grafika_zad7
             points.Add(point);
 
             Rectangle rectangle = new Rectangle();
-            rectangle.SetValue(Canvas.LeftProperty, point.X - 2);
-            rectangle.SetValue(Canvas.TopProperty, point.Y - 2);
-            rectangle.Width = 5;
-            rectangle.Height = 5;
+            rectangle.SetValue(Canvas.LeftProperty, point.X - 3);
+            rectangle.SetValue(Canvas.TopProperty, point.Y - 3);
+            rectangle.Width = 7;
+            rectangle.Height = 7;
             rectangle.Stroke = Brushes.Black;
             rectangle.Fill = new SolidColorBrush(Colors.White);
             rectangle.StrokeThickness = 2;
@@ -65,44 +62,46 @@ namespace Grafika_zad7
             canvas.Children.Add(rectangle);
         }
 
+        private void CreateCustomShape(object sender, RoutedEventArgs e)
+        {
+            CustomShape customShape = new CustomShape(rectangles, points);
+            customShape.Stroke = Brushes.Red;
+            customShape.StrokeThickness = 1;
+            canvas.Children.Add(customShape);
+
+            shapes.Add(customShape);
+            points.Clear();
+            rectangles.Clear();
+        }
+
         private void CheckShape(object sender, MouseButtonEventArgs e)
         {
             Rectangle clickedRectangle = sender as Rectangle;
             // Poprzednia figura.
-            foreach (Rectangle rectangle in previousShape)
+            if (currentShape != null)
             {
-                rectangle.Stroke = Brushes.Black;
+                foreach (Rectangle rectangle in currentShape.GetRectangles())
+                {
+                    rectangle.Stroke = Brushes.Black;
+                }
             }
             // Obecna figura.
-            foreach (List<Rectangle> shape in shapes)
+            foreach (CustomShape shape in shapes)
             {
-                if (shape.Contains(clickedRectangle))
+                List<Rectangle> shapeRectangles = shape.GetRectangles();
+                if (shapeRectangles.Contains(clickedRectangle))
                 {
-                    foreach (Rectangle rectangle in shape)
+                    foreach (Rectangle rectangle in shapeRectangles)
                     {
-                        rectangle.Stroke = Brushes.LightGreen;
+                        rectangle.Stroke = Brushes.OrangeRed;
                     }
+                    currentShape = shape;
                     return;
                 }
             }
         }
 
-        private void CreateCustomShape(object sender, RoutedEventArgs e)
-        {
-            CustomShape customShape = new CustomShape();
-            customShape.MakeShape(points);
-            customShape.Stroke = Brushes.Red;
-            customShape.StrokeThickness = 1;
-            canvas.Children.Add(customShape);
-
-            previousShape = new List<Rectangle>(currentShape);
-            currentShape = new List<Rectangle>(rectangles);
-
-            points.Clear();
-            
-            shapes.Add(new List<Rectangle>(rectangles));
-            rectangles.Clear();
-        }
+        
 
         private void Canvas_MouseMove(object sender, MouseEventArgs e)
         {

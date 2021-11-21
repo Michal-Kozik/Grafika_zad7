@@ -11,14 +11,30 @@ namespace Grafika_zad7
 {
     class CustomShape : Shape
     {
-        private LineGeometry line = new LineGeometry();
+        //private LineGeometry line = new LineGeometry();
         private GeometryGroup geometryGroup;
         private List<Point> points;
+        private List<Rectangle> rectangles;
 
-        public CustomShape()
+        public CustomShape(List<Rectangle> rectangles, List<Point> points)
         {
             geometryGroup = new GeometryGroup();
+            this.rectangles = new List<Rectangle>(rectangles);
+            this.points = new List<Point>(points);
+            MakeShape();
         }
+
+        public List<Rectangle> GetRectangles()
+        {
+            return rectangles;
+        }
+
+        public void SetRectangles(List<Rectangle> rectangles)
+        {
+            this.rectangles = rectangles;
+        }
+
+
 
         protected override Geometry DefiningGeometry
         {
@@ -28,9 +44,8 @@ namespace Grafika_zad7
             }
         }
 
-        public void MakeShape(List<Point> points)
+        public void MakeShape()
         {
-            this.points = points;
             for (int i = 0; i < points.Count; i++)
             {
                 if (i == points.Count - 1)
@@ -44,10 +59,6 @@ namespace Grafika_zad7
             }
         }
 
-        //public void MakeShape()
-        //{
-        //    geometryGroup.Children.Add(new LineGeometry(new Point(10, 10), new Point(50, 50)));
-        //    geometryGroup.Children.Add(new LineGeometry(new Point(50, 50), new Point(50, 100)));
-        //}
+        
     }
 }

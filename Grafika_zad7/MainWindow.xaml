@@ -39,8 +39,12 @@
             <Button Name="rotateShapeButton" Margin="0, 5" IsEnabled="False" Click="RotateShape">Obróć</Button>
             <Border BorderThickness="0, 0, 0, 1" BorderBrush="Gray" Margin="0, 10"></Border>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Label>Współczynnik:</Label>
-                <TextBox Name="multiplierInput" Width="40"></TextBox>
+                <Label>X:</Label>
+                <TextBox Name="inputScaleX" Width="40"></TextBox>
+                <Label>Y:</Label>
+                <TextBox Name="inputScaleY" Width="40"></TextBox>
+                <Label>k:</Label>
+                <TextBox Name="inputScaleK" Width="40"></TextBox>
             </StackPanel>
             <Button Name="scaleShapeButton" Margin="0, 5" IsEnabled="False" Click="ScaleShape">Skaluj</Button>
             <Border BorderThickness="0, 0, 0, 1" BorderBrush="Gray" Margin="0, 10"></Border>

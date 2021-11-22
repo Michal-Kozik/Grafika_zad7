@@ -162,9 +162,11 @@ namespace Grafika_zad7
         private void ScaleShape(object sender, RoutedEventArgs e)
         {
             // TODO: Walidacja danych.
-            //int value = Int32.Parse(multiplierInput.Text);
-            double value = Double.Parse(multiplierInput.Text);
-            currentShape.ScaleShape(value);
+            int x = Int32.Parse(inputScaleX.Text);
+            int y = Int32.Parse(inputScaleY.Text);
+            double value = Double.Parse(inputScaleK.Text);
+            Point regardingPoint = new Point(x, y);
+            currentShape.ScaleShape(regardingPoint, value);
 
             // Aktualizacja listy.
             List<Rectangle> rectangles = currentShape.GetRectangles();

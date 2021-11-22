@@ -127,22 +127,14 @@ namespace Grafika_zad7
             Refresh();
         }
 
-        public void ScaleShape(double value)
+        public void ScaleShape(Point regardingPoint, double k)
         {
-            Point startPosition = points[0];
             // Obliczanie punktow.
             for (int i = 0; i < points.Count; i++)
             {
-                int x = (int)(points[i].X * value);
-                int y = (int)(points[i].Y * value);
+                int x = (int)(points[i].X * k + (1 - k) * regardingPoint.X);
+                int y = (int)(points[i].Y * k + (1 - k) * regardingPoint.Y);
                 points[i] = new Point(x, y);
-            }
-            // Korygowanie polozenia.
-            double xDifference = points[0].X - startPosition.X;
-            double yDifference = points[0].Y - startPosition.Y;
-            for (int i = 0; i < points.Count; i++)
-            {
-                points[i] = new Point(points[i].X - xDifference, points[i].Y - yDifference);
             }
             // Rysowanie ksztaltu.
             GeometryGroup updatedGeometryGroup = new GeometryGroup();
@@ -160,6 +152,5 @@ namespace Grafika_zad7
             geometryGroup = updatedGeometryGroup;
             Refresh();
         }
-        
     }
 }

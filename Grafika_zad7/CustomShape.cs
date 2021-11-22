@@ -34,6 +34,22 @@ namespace Grafika_zad7
             this.rectangles = rectangles;
         }
 
+        public List<Point> GetPoints()
+        {
+            return points;
+        }
+
+        public void SetPoints(List<Point> points)
+        {
+            this.points = points;
+        }
+
+        private void Refresh()
+        {
+            StrokeThickness = 2;
+            StrokeThickness = 1;
+        }
+
 
 
         protected override Geometry DefiningGeometry
@@ -57,6 +73,29 @@ namespace Grafika_zad7
                     geometryGroup.Children.Add(new LineGeometry(points[i], points[i + 1]));
                 }
             }
+        }
+
+        public void MoveShape(Vector vector)
+        {
+            GeometryGroup updatedGeometryGroup = new GeometryGroup();
+            for (int i = 0; i < points.Count; i++)
+            {
+                if (i == points.Count - 1)
+                {
+                    updatedGeometryGroup.Children.Add(new LineGeometry(Point.Add(points[i], vector), Point.Add(points[0], vector)));
+                }
+                else
+                {
+                    updatedGeometryGroup.Children.Add(new LineGeometry(Point.Add(points[i], vector), Point.Add(points[i + 1], vector)));
+                }
+            }
+            // Zaktualizowanie kolekcji.
+            for (int i = 0; i < points.Count; i++)
+            {
+                points[i] = Point.Add(points[i], vector);
+            }
+            geometryGroup = updatedGeometryGroup;
+            Refresh();
         }
 
         

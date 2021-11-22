@@ -96,6 +96,7 @@ namespace Grafika_zad7
                         rectangle.Stroke = Brushes.OrangeRed;
                     }
                     currentShape = shape;
+                    moveShapeButton.IsEnabled = true;
                     return;
                 }
             }
@@ -117,6 +118,24 @@ namespace Grafika_zad7
         private void EnableDrawing(object sender, RoutedEventArgs e)
         {
             IS_DRAWING_ENABLE = true;
+        }
+
+        private void MoveShape(object sender, RoutedEventArgs e)
+        {
+            // TODO: Walidacja danych.
+            int x = Int32.Parse(inputX.Text);
+            int y = Int32.Parse(inputY.Text);
+            Vector vector = new Vector(x, y);
+            currentShape.MoveShape(vector);
+
+            // Aktualizacja listy.
+            List<Rectangle> rectangles = currentShape.GetRectangles();
+            List<Point> points = currentShape.GetPoints();
+            for (int i = 0; i < rectangles.Count; i++)
+            {
+                rectangles[i].SetValue(Canvas.LeftProperty, points[i].X - 3);
+                rectangles[i].SetValue(Canvas.TopProperty, points[i].Y - 3);
+            }
         }
     }
 }

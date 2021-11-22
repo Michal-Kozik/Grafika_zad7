@@ -22,11 +22,11 @@
             <Label FontWeight="Bold">Modyfikacja:</Label>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Label>X:</Label>
-                <TextBox Width="50"></TextBox>
+                <TextBox Name="inputX" Width="50"></TextBox>
                 <Label>Y:</Label>
-                <TextBox Width="50"></TextBox>
+                <TextBox Name="inputY" Width="50"></TextBox>
             </StackPanel>
-            <Button Margin="0, 5" IsEnabled="False">Przesuń</Button>
+            <Button Name="moveShapeButton" Margin="0, 5" IsEnabled="False" Click="MoveShape">Przesuń</Button>
             <Border BorderThickness="0, 0, 0, 1" BorderBrush="Gray" Margin="0, 10"></Border>
             <CheckBox Name="isDrawingDisabled" Checked="DisableDrawing" Unchecked="EnableDrawing">Wyłącz rysowanie</CheckBox>
         </StackPanel>

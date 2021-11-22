@@ -22,9 +22,9 @@
             <Label FontWeight="Bold">Modyfikacja:</Label>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Label>X:</Label>
-                <TextBox Name="inputX" Width="50"></TextBox>
+                <TextBox Name="inputX" Width="40"></TextBox>
                 <Label>Y:</Label>
-                <TextBox Name="inputY" Width="50"></TextBox>
+                <TextBox Name="inputY" Width="40"></TextBox>
             </StackPanel>
             <Button Name="moveShapeButton" Margin="0, 5" IsEnabled="False" Click="MoveShape">Przesuń</Button>
             <Border BorderThickness="0, 0, 0, 1" BorderBrush="Gray" Margin="0, 10"></Border>
@@ -38,7 +38,13 @@
             </StackPanel>
             <Button Name="rotateShapeButton" Margin="0, 5" IsEnabled="False" Click="RotateShape">Obróć</Button>
             <Border BorderThickness="0, 0, 0, 1" BorderBrush="Gray" Margin="0, 10"></Border>
-            <CheckBox Name="isDrawingDisabled" Checked="DisableDrawing" Unchecked="EnableDrawing">Wyłącz rysowanie</CheckBox>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Label>Współczynnik:</Label>
+                <TextBox Name="multiplierInput" Width="40"></TextBox>
+            </StackPanel>
+            <Button Name="scaleShapeButton" Margin="0, 5" IsEnabled="False" Click="ScaleShape">Skaluj</Button>
+            <Border BorderThickness="0, 0, 0, 1" BorderBrush="Gray" Margin="0, 10"></Border>
+            <CheckBox Name="isDrawingDisabled" Checked="DisableDrawing" Unchecked="EnableDrawing">Włącz zaznaczanie</CheckBox>
         </StackPanel>
         <Label Name="mousePosition" VerticalAlignment="Bottom">(0, 0)</Label>
         <Canvas Name="canvas" Grid.Column="1" Background="LightGray" ClipToBounds="True" AllowDrop="True"

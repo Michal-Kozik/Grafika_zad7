@@ -98,6 +98,7 @@ namespace Grafika_zad7
                     currentShape = shape;
                     moveShapeButton.IsEnabled = true;
                     rotateShapeButton.IsEnabled = true;
+                    scaleShapeButton.IsEnabled = true;
                     return;
                 }
             }
@@ -147,6 +148,23 @@ namespace Grafika_zad7
             int angle = Int32.Parse(inputRotateAngle.Text);
             Point centerPoint = new Point(x, y);
             currentShape.RotateShape(centerPoint, angle);
+
+            // Aktualizacja listy.
+            List<Rectangle> rectangles = currentShape.GetRectangles();
+            List<Point> points = currentShape.GetPoints();
+            for (int i = 0; i < rectangles.Count; i++)
+            {
+                rectangles[i].SetValue(Canvas.LeftProperty, points[i].X - 3);
+                rectangles[i].SetValue(Canvas.TopProperty, points[i].Y - 3);
+            }
+        }
+
+        private void ScaleShape(object sender, RoutedEventArgs e)
+        {
+            // TODO: Walidacja danych.
+            //int value = Int32.Parse(multiplierInput.Text);
+            double value = Double.Parse(multiplierInput.Text);
+            currentShape.ScaleShape(value);
 
             // Aktualizacja listy.
             List<Rectangle> rectangles = currentShape.GetRectangles();

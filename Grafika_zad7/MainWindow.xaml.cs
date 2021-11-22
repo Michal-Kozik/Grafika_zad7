@@ -97,6 +97,7 @@ namespace Grafika_zad7
                     }
                     currentShape = shape;
                     moveShapeButton.IsEnabled = true;
+                    rotateShapeButton.IsEnabled = true;
                     return;
                 }
             }
@@ -127,6 +128,25 @@ namespace Grafika_zad7
             int y = Int32.Parse(inputY.Text);
             Vector vector = new Vector(x, y);
             currentShape.MoveShape(vector);
+
+            // Aktualizacja listy.
+            List<Rectangle> rectangles = currentShape.GetRectangles();
+            List<Point> points = currentShape.GetPoints();
+            for (int i = 0; i < rectangles.Count; i++)
+            {
+                rectangles[i].SetValue(Canvas.LeftProperty, points[i].X - 3);
+                rectangles[i].SetValue(Canvas.TopProperty, points[i].Y - 3);
+            }
+        }
+
+        private void RotateShape(object sender, RoutedEventArgs e)
+        {
+            // TODO: Walidacja danych.
+            int x = Int32.Parse(inputRotateX.Text);
+            int y = Int32.Parse(inputRotateY.Text);
+            int angle = Int32.Parse(inputRotateAngle.Text);
+            Point centerPoint = new Point(x, y);
+            currentShape.RotateShape(centerPoint, angle);
 
             // Aktualizacja listy.
             List<Rectangle> rectangles = currentShape.GetRectangles();

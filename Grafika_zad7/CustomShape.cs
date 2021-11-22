@@ -98,6 +98,34 @@ namespace Grafika_zad7
             Refresh();
         }
 
+        public void RotateShape(Point centerPoint, int angleInDegrees)
+        {
+            // Obliczanie punktow.
+            double angleInRadians = angleInDegrees * (Math.PI / 180);
+            double cos = Math.Cos(angleInRadians);
+            double sin = Math.Sin(angleInRadians);
+            for (int i = 0; i < points.Count; i++)
+            {
+                int x = (int)(cos * (points[i].X - centerPoint.X) - sin * (points[i].Y - centerPoint.Y) + centerPoint.X);
+                int y = (int)(sin * (points[i].X - centerPoint.X) + cos * (points[i].Y - centerPoint.Y) + centerPoint.Y);
+                points[i] = new Point(x, y);
+            }
+            // Rysowanie ksztaltu.
+            GeometryGroup updatedGeometryGroup = new GeometryGroup();
+            for (int i = 0; i < points.Count; i++)
+            {
+                if (i == points.Count - 1)
+                {
+                    updatedGeometryGroup.Children.Add(new LineGeometry(points[i], points[0]));
+                }
+                else
+                {
+                    updatedGeometryGroup.Children.Add(new LineGeometry(points[i], points[i + 1]));
+                }
+            }
+            geometryGroup = updatedGeometryGroup;
+            Refresh();
+        }
         
     }
 }

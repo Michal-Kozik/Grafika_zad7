@@ -50,7 +50,12 @@
             <Border BorderThickness="0, 0, 0, 1" BorderBrush="Gray" Margin="0, 10"></Border>
             <CheckBox Name="isDrawingDisabled" Checked="DisableDrawing" Unchecked="EnableDrawing">Włącz zaznaczanie</CheckBox>
         </StackPanel>
-        <Label Name="mousePosition" VerticalAlignment="Bottom">(0, 0)</Label>
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+            <Label Margin="0, 10" Name="mousePosition" VerticalAlignment="Bottom">(0, 0)</Label>
+            <Button Margin="0, 10" Width="60" Click="ReadShapes">Wczytaj</Button>
+            <Button Margin="10, 10" Width="60" Click="SaveShapes">Zapisz</Button>
+        </StackPanel>
+        
         <Canvas Name="canvas" Grid.Column="1" Background="LightGray" ClipToBounds="True" AllowDrop="True"
                 MouseLeftButtonDown="AddPoint"
                 MouseMove="Canvas_MouseMove">

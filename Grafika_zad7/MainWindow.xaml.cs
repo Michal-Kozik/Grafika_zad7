@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -175,6 +177,78 @@ namespace Grafika_zad7
             {
                 rectangles[i].SetValue(Canvas.LeftProperty, points[i].X - 3);
                 rectangles[i].SetValue(Canvas.TopProperty, points[i].Y - 3);
+            }
+        }
+
+
+        // Pliki.
+        private void SaveShapes(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                var logFile = File.Create(saveFileDialog.FileName);
+                var logWriter = new StreamWriter(logFile);
+
+                logWriter.WriteLine(shapes.Count.ToString());
+                foreach (CustomShape shape in shapes)
+                {
+                    logWriter.WriteLine(shape.GetPoints().Count);
+                    foreach (Point point in shape.GetPoints())
+                    {
+                        logWriter.WriteLine($"{point.X};{point.Y}");
+                    }
+                }
+                logWriter.Dispose();
+                logFile.Dispose();
+            }
+            
+        }
+
+        private void ReadShapes(object sender, RoutedEventArgs e)
+        {
+            string line;
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            if (openFileDialog.ShowDialog() == true)
+            {
+                var logReader = new StreamReader(openFileDialog.FileName);
+                // Ilosc figur.
+                line = logReader.ReadLine();
+                int numberOfShapes = Int32.Parse(line);
+                for (int i = 0; i < numberOfShapes; i++)
+                {
+                    // Ilosc wierzholkow.
+                    line = logReader.ReadLine();
+                    int numberOfRectangles = Int32.Parse(line);
+                    for (int j = 0; j < numberOfRectangles; j++)
+                    {
+                        line = logReader.ReadLine();
+                        string[] pair = line.Split(';');
+                        Point point = new Point(Int32.Parse(pair[0]), Int32.Parse(pair[1]));
+                        points.Add(point);
+
+                        Rectangle rectangle = new Rectangle();
+                        rectangle.SetValue(Canvas.LeftProperty, point.X - 3);
+                        rectangle.SetValue(Canvas.TopProperty, point.Y - 3);
+                        rectangle.Width = 7;
+                        rectangle.Height = 7;
+                        rectangle.Stroke = Brushes.Black;
+                        rectangle.Fill = new SolidColorBrush(Colors.White);
+                        rectangle.StrokeThickness = 2;
+                        rectangle.MouseLeftButtonDown += new MouseButtonEventHandler(CheckShape);
+                        rectangles.Add(rectangle);
+
+                        canvas.Children.Add(rectangle);
+                    }
+                    CustomShape customShape = new CustomShape(rectangles, points);
+                    customShape.Stroke = Brushes.Red;
+                    customShape.StrokeThickness = 1;
+                    canvas.Children.Add(customShape);
+
+                    shapes.Add(customShape);
+                    points.Clear();
+                    rectangles.Clear();
+                }
             }
         }
     }

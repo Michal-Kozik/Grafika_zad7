@@ -40,6 +40,50 @@ namespace Grafika_zad7
             IS_DRAWING_ENABLE = true;
         }
 
+        private bool IsInputMoveValid()
+        {
+            bool xSuccess = Int32.TryParse(inputX.Text, out int x);
+            bool ySuccess = Int32.TryParse(inputY.Text, out int y);
+            if (xSuccess && ySuccess)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private bool IsInputRotateValid()
+        {
+            bool xSuccess = Int32.TryParse(inputRotateX.Text, out int x);
+            bool ySuccess = Int32.TryParse(inputRotateY.Text, out int y);
+            bool angleSuccess = Int32.TryParse(inputRotateAngle.Text, out int angle);
+            if (xSuccess && ySuccess && angleSuccess)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private bool IsInputScaleValid()
+        {
+            bool xSuccess = Int32.TryParse(inputScaleX.Text, out int x);
+            bool ySuccess = Int32.TryParse(inputScaleY.Text, out int y);
+            bool kSuccess = Double.TryParse(inputScaleK.Text, out double k);
+            if (xSuccess && ySuccess && kSuccess)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         private void AddPoint(object sender, MouseButtonEventArgs e)
         {
             if (!IS_DRAWING_ENABLE)
@@ -126,7 +170,11 @@ namespace Grafika_zad7
 
         private void MoveShape(object sender, RoutedEventArgs e)
         {
-            // TODO: Walidacja danych.
+            if (!IsInputMoveValid())
+            {
+                MessageBox.Show("Podane dane nie są prawidłowe.", "Niepoprawne dane", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
             int x = Int32.Parse(inputX.Text);
             int y = Int32.Parse(inputY.Text);
             Vector vector = new Vector(x, y);
@@ -144,7 +192,11 @@ namespace Grafika_zad7
 
         private void RotateShape(object sender, RoutedEventArgs e)
         {
-            // TODO: Walidacja danych.
+            if (!IsInputRotateValid())
+            {
+                MessageBox.Show("Podane dane nie są prawidłowe.", "Niepoprawne dane", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
             int x = Int32.Parse(inputRotateX.Text);
             int y = Int32.Parse(inputRotateY.Text);
             int angle = Int32.Parse(inputRotateAngle.Text);
@@ -163,7 +215,11 @@ namespace Grafika_zad7
 
         private void ScaleShape(object sender, RoutedEventArgs e)
         {
-            // TODO: Walidacja danych.
+            if (!IsInputScaleValid())
+            {
+                MessageBox.Show("Podane dane nie są prawidłowe.", "Niepoprawne dane", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
             int x = Int32.Parse(inputScaleX.Text);
             int y = Int32.Parse(inputScaleY.Text);
             double value = Double.Parse(inputScaleK.Text);
